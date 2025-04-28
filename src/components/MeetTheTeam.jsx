@@ -22,16 +22,17 @@ export default function MeetTheTeamSection() {
             <h4 className="font-bold">Alessandro Hammond</h4>
             <p className="text-sm text-gray-400">Co-Founder</p>
           </div>
-          <ul className="text-left text-gray-600 text-sm space-y-2">
-            <li>• Co-creator of Cartography</li>
-            <li>
-              • 13+ year infosec career, building capabilities at Lyft,
-              Microsoft, and NSA
-            </li>
-            <li>
-              • Architected and built Lyft’s vulnerability management platform
-            </li>
-          </ul>
+          <p className="text-justify text-gray-600 text-sm space-y-2">
+            Alessandro Hammond is graduate of Harvard University, a Schwarzman
+            Scholar, and a Clinical Research at Boston Children’s Hospital, the
+            Broad Institute, and Massachusetts General Hospital. He specializes
+            in oncology and hematology. He has published over 20+ papers and has
+            been published in prestigious journals such as Nature, Nature
+            Machine Intelligence, Nature Medicine, the Journal of Clinical
+            Oncology, and Frontiers. He has also been featured in Forbes
+            Magazine and Good Morning America. His goal is to help patients find
+            clinic trials and doctors and researchers navigate them.
+          </p>
         </div>
 
         {/* Ishita */}
