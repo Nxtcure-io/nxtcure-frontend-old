@@ -12,58 +12,62 @@ const Navbar = () => {
             alt="Nxt Cure Logo"
             className="h-10 w-auto"
           />
-          <span className="text-xl font-bold text-gray-800">NxtCure</span>
+          <span className="cormorant text-xl font-bold text-gray-800">
+            NxtCure
+          </span>
         </div>
 
         {/* Navigation Links */}
         <nav className="hidden md:flex space-x-8">
           <a
             href="#"
-            className="text-gray-700 hover:text-blue-600 font-medium transition"
+            className="nav-txt text-gray-700 hover:text-blue-600 font-medium transition"
           >
             Home
           </a>
           <a
             href="#about"
-            className="text-gray-700 hover:text-blue-600 font-medium transition"
+            className="nav-txt text-gray-700 hover:text-blue-600 font-medium transition"
           >
             About Us
           </a>
-          <a
-            href="#patients"
-            className="text-gray-700 hover:text-blue-600 font-medium transition"
-          >
-            Patients
-          </a>
-          <a
-            href="#researchers"
-            className="text-gray-700 hover:text-blue-600 font-medium transition"
-          >
-            Researchers
-          </a>
-          <a
-            href="#doctors"
-            className="text-gray-700 hover:text-blue-600 font-medium transition"
-          >
-            Doctors
-          </a>
+          {/* Dropdown for NxTrials */}
+          <div className="relative group">
+            <button className="nav-txt text-gray-700 hover:text-blue-600 font-medium transition">
+              NxtTrials
+            </button>
+            <div className="absolute left-0 mt-2 w-40 bg-white shadow-lg rounded-md opacity-0 group-hover:opacity-100 group-hover:translate-y-1 transform transition duration-200 z-40 pointer-events-none group-hover:pointer-events-auto">
+              <a
+                href="#patients"
+                className="nav-txt block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+              >
+                Patients
+              </a>
+              <a
+                href="#researchers"
+                className="nav-txt block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+              >
+                Researchers
+              </a>
+              <a
+                href="#doctors"
+                className="nav-txt block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+              >
+                Doctors
+              </a>
+            </div>
+          </div>
           <a
             href="#pricing"
-            className="text-gray-700 hover:text-blue-600 font-medium transition"
+            className="nav-txt text-gray-700 hover:text-blue-600 font-medium transition"
           >
             Pricing
           </a>
           <a
             href="#faq"
-            className="text-gray-700 hover:text-blue-600 font-medium transition"
+            className="nav-txt text-gray-700 hover:text-blue-600 font-medium transition"
           >
             FAQs
-          </a>
-          <a
-            href="#contact"
-            className="text-gray-700 hover:text-blue-600 font-medium transition"
-          >
-            Contact
           </a>
         </nav>
 
@@ -77,7 +81,7 @@ const Navbar = () => {
           </a>
           <a
             href="#"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full transition duration-300"
+            className="nav-txt bg-blue-500 button_hvr text-white py-2 px-4 rounded-full transition duration-300"
           >
             Sign Up
           </a>
