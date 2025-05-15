@@ -40,7 +40,7 @@ export default function HeroSection() {
           Get Started
         </button>
 
-        <h3 className="expert-tab text-gray-500 text-sm font-medium mb-6">
+        <h3 className="expert-tab text-gray-500 text-sm font-medium mb-15">
           Built by Experts
         </h3>
         <div className="flex justify-center items-center flex-wrap gap-15 px-4 mt-5">
