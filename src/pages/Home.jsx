@@ -7,6 +7,9 @@ import MeetTheTeamSection from "../components/MeetTheTeam";
 import CallToActionSection from "../components/CallToActionSection";
 import Footer from "../components/Footer";
 import HeroSection from "../components/HeroSection";
+import HowItStarted from "../components/HowItStarted";
+import StayUpdated from "../components/StayUpdated";
+import ContactForm from "../components/ContactForm";
 
 export default function Home() {
   return (
@@ -15,8 +18,10 @@ export default function Home() {
       <FeaturesSection />
       <NxtCureSection />
       <TrustedBySection />
+      <HowItStarted />
       <MeetTheTeamSection />
-      <CallToActionSection />
+      <StayUpdated />
+      <ContactForm />
       <Footer />
     </>
   );

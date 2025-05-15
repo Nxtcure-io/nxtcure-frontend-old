@@ -10,7 +10,7 @@ function App() {
         className="w-full max-w-[1440px] bg-white rounded-md shadow-md overflow-auto"
         style={{
           height: "95vh",
-          border: "1.5px solid gray-500",
+          border: "1.8px solid gray-500",
           boxShadow: "1px 4px 8px #908DDC",
         }}
       >

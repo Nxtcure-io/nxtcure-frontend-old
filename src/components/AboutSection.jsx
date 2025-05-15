@@ -19,7 +19,7 @@ export default function NxtCureSection() {
         it accessible, trusted, and innovative for you:
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto pl-7 pr-7">
         {/* Patients Section */}
         <div className="p-6 bg-white rounded-lg text-left">
           <div className="mb-4">
