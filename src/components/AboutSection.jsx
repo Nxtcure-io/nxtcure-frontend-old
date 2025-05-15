@@ -4,14 +4,14 @@ import researcherLogo from "../assets/researcher.png";
 
 export default function NxtCureSection() {
   return (
-    <section className="py-20 bg-white text-center">
+    <section className="py-20 bg-[radial-gradient(circle_at_center,_#F1E2FE_0%,_#F3ECFF_10%,_#EEF7FF_90%)] text-center">
       <h2
-        className="text-3xl font-bold mb-1 text-purple-600"
-        style={{ fontSize: "64px" }}
+        className="cormorant text-3xl font-bold mb-1 text-purple-600"
+        style={{ fontSize: "64px", color: "rgb(82 59 124)" }}
       >
         NxtCure
       </h2>
-      <p className="text-gray-600 mb-4">Your Path to Hope and Healing</p>
+      <p className="text-gray-700 mb-4">Your Path to Hope and Healing</p>
 
       <p className="max-w-3xl mx-auto text-gray-400 mb-12">
         At Next Cure, we believe everyone deserves access to cutting-edge
@@ -21,7 +21,7 @@ export default function NxtCureSection() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
         {/* Patients Section */}
-        <div className="p-6 bg-purple-50 rounded-lg text-left">
+        <div className="p-6 bg-white rounded-lg text-left">
           <div className="mb-4">
             <i className="fas fa-user-nurse text-4xl text-purple-600"></i>
           </div>
@@ -40,7 +40,7 @@ export default function NxtCureSection() {
         </div>
 
         {/* Researchers Section */}
-        <div className="p-6 bg-purple-50 rounded-lg text-left">
+        <div className="p-6 bg-white rounded-lg text-left">
           <div className="mb-4">
             <i className="fas fa-flask text-4xl text-purple-600"></i>
           </div>
@@ -60,7 +60,7 @@ export default function NxtCureSection() {
         </div>
 
         {/* Doctors Section */}
-        <div className="p-6 bg-purple-50 rounded-lg text-left">
+        <div className="p-6 bg-white rounded-lg text-left">
           <div className="mb-4">
             <i className="fas fa-user-nurse text-4xl text-purple-600"></i>
           </div>

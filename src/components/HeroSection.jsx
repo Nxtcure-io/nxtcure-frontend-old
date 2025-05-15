@@ -9,8 +9,8 @@ export default function HeroSection() {
     <section className="flex flex-col items-center justify-center min-h-screen px-6 py-6 text-center bg-[radial-gradient(circle_at_center,_#F1E2FE_10%,_#F3ECFF_30%,_#EEF7FF_80%)]">
       <div className="max-w-3xl">
         <h1
-          className="font-bold leading-tight mt-35"
-          style={{ fontSize: "4.5rem" }}
+          className="font-bold leading-tight mt-2"
+          style={{ fontSize: "4rem" }}
         >
           <span className="cormorant text-black bg-clip-text">
             Connect to Clinical Trials
@@ -34,7 +34,7 @@ export default function HeroSection() {
           make finding the right care feel less overwhelming.
         </p>
         <button
-          className="bg-blue-500 button_hvr text-white px-5 py-3 text-lg rounded-full shadow-md transition-all duration-300 mb-18"
+          className="bg-blue-500 button_hvr text-white px-5 py-3 text-lg rounded-full shadow-md transition-all duration-300 mb-12"
           style={{ fontSize: "1rem", cursor: "pointer", fontWeight: "500" }}
         >
           Get Started

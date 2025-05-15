@@ -9,6 +9,11 @@
   font-family: 'Roboto', sans-serif;
 }
 
+body {
+  overflow-x: hidden;
+}
+
+
 .cormorant {
   font-family: 'Cormorant Garamond', serif;
 }
