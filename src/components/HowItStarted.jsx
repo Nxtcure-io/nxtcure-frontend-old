@@ -27,7 +27,10 @@ export default function HowItStarted() {
           <h2 className="cormorant text-5xl font-bold text-gray-800 mb-4">
             How It All Started?
           </h2>
-          <p className="text-gray-600 text-lg leading-relaxed">
+          <p
+            className="text-gray-600 text-lg leading-relaxed"
+            style={{ fontSize: "1rem" }}
+          >
             This is Gonzalo—a survivor, a fighter, and a beacon of hope.
             Gonzalo’s journey is extraordinary. He first underwent open-heart
             surgery, faced 2 heart attacks, then faced kidney failure, 2

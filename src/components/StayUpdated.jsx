@@ -3,7 +3,10 @@ export default function StayUpdated() {
     <section className="bg-[radial-gradient(circle_at_center,_#F1E2FE_0%,_#F3ECFF_10%,_#EEF7FF_90%)] py-12 px-4 md:px-16">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 mb-5">
         {/* Left: Text Section */}
-        <div className="text-center md:text-left md:w-1/2 space-y-3 mt-5">
+        <div
+          className="text-center md:text-left md:w-1/2 space-y-3 mt-5"
+          style={{ marginRight: "2rem" }}
+        >
           <h2 className="cormorant text-4xl md:text-5xl font-bold text-gray-800 italic">
             Stay updated with
             <br /> NxtCure

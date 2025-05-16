@@ -85,7 +85,7 @@ export default function MeetTheTeamSection() {
               <img
                 src={ishitaPic}
                 alt="Ishita"
-                className="w-20 h-20 rounded-full mr-4"
+                className="w-21 h-20 rounded-full mr-4"
               />
               <div className="text-left">
                 <h4 className="font-bold">Ishita Kapoor</h4>
@@ -95,12 +95,13 @@ export default function MeetTheTeamSection() {
             <p className="text-justify text-gray-600 text-sm">
               Ishita Kapoor is a technologist, 2x co-founding impact-driven
               ventures that merge tech innovation with strategic business
-              insight. A Schwarzman Scholar, she has earned accolades from
-              Microsoft, Google, and UNICEF, with 30+ national and international
-              hackathon wins. Ishita has presented her work to Microsoft CEO
-              Satya Nadella and now closely works with Microsoft as one of their
-              PR partners. She was also awarded India’s Best Research Paper of
-              the Year in 2023, recognized through Scopus-indexed journals.
+              insight. A Schwarzman Scholar, startup board member at IIT
+              Roorkee, she has earned accolades from Microsoft, Google, and
+              UNICEF, with 30+ national and international hackathon wins. Ishita
+              has presented her work to Microsoft CEO Satya Nadella and now
+              closely works with Microsoft as one of their PR partners. She was
+              also awarded India’s Best Research Paper of the Year in 2023,
+              recognized through Scopus-indexed journals.
             </p>
           </div>
           <div className="mt-4 text-left">
