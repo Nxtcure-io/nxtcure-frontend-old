@@ -48,3 +48,23 @@ color: #908DDC;
   color: white;
   background-color: black;
 }
+
+/* Scrollbar for WebKit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3f4f6; /* Tailwind gray-100 */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #7571ec; /* Tailwind blue-500 */
+  border-radius: 8px;
+  border: 2px solid #f3f4f6; /* Matches track for padding effect */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #524fac; /* Tailwind blue-600 or 700 */
+}
+

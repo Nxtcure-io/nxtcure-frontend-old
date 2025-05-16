@@ -19,15 +19,15 @@ const FeaturesSection = () => {
           {[
             {
               stat: "5%",
-              text: "Patients start their cancer’s first right clinical trial. 60% of eligible patients miss out on clinical trials.",
+              text: "Patients start their cancer’s first right clinical trial. 60% of eligible patients miss out on clinical trials.Most patients (73%) want to join clinical trials but don’t know how to find or enroll in them.",
             },
             {
               stat: "80%",
-              text: "80% of clinical trials fail to meet enrollment goals.",
+              text: "Less than 5% of eligible U.S. patients— like those with cancer or heart failure— enroll in clinical trials, as over 80% of trials face recruitment issues due to overly strict eligibility criteria.",
             },
             {
               stat: "94%",
-              text: "94% of physicians don’t even discuss clinical trials during regular visits.",
+              text: "94% of physicians don’t discuss clinical trials during routine visits. Without proper tools to stay informed or design new trials, doctors and researchers unintentionally exclude >65% of eligible patients.",
             },
           ].map((item, index) => (
             <div

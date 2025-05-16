@@ -43,7 +43,7 @@ export default function MeetTheTeamSection() {
           </div>
           <div className="mt-4 text-left">
             <a
-              href="https://linkedin.com/in/alessandrohammond"
+              href="https://www.linkedin.com/in/alessandro-hammond-43b650224/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Alessandro LinkedIn"
@@ -106,7 +106,7 @@ export default function MeetTheTeamSection() {
           </div>
           <div className="mt-4 text-left">
             <a
-              href="https://linkedin.com/in/ishitakapoor"
+              href="https://www.linkedin.com/in/itsishakapoor/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Ishita LinkedIn"
