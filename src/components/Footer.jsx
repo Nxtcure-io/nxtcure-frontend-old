@@ -14,8 +14,7 @@ export default function Footer() {
           <div className="mt-8 space-y-2">
             <a
               href="#"
-              className="store-hvr flex items-center bg-white text-black font-semibold px-3 py-1 rounded-lg text-xs w-39 transition border border-gray-500"
-              style={{ boxShadow: "0.5px 1px 4px white-100" }}
+              className="store-hvr flex items-center bg-black text-black font-semibold px-3 py-1 rounded-lg text-xs w-39 transition border-1 border-white text-white"
             >
               <img
                 src={appStoreLogo}
@@ -43,7 +42,7 @@ export default function Footer() {
             </a>
             <a
               href="#"
-              className="store-hvr flex items-center bg-white text-black font-semibold px-2 py-1 rounded-lg text-xs w-39 transition border border-gray-500"
+              className="store-hvr flex items-center bg-black font-semibold px-2 py-1 rounded-lg text-xs w-39 transition border-1 border-white text-white"
               style={{ boxShadow: "0.5px 1px 4px white-100" }}
             >
               <img

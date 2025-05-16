@@ -44,9 +44,10 @@ color: #908DDC;
 }
 
 .store-hvr:hover{
-  border: 0.8px solid white;
-  color: white;
-  background-color: black;
+  border: 0.8px solid black;
+  color: black;
+  background-color: white;
+  box-shadow: 0.8px 2px 4px rgba(186, 186, 186, 0.837);
 }
 
 /* Scrollbar for WebKit (Chrome, Safari, Edge) */
