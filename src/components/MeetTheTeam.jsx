@@ -4,7 +4,9 @@ import alessandroPic from "../assets/alessandro.jpg";
 export default function MeetTheTeamSection() {
   return (
     <section className="py-20 bg-white text-center">
-      <h2 className="text-5xl font-bold mb-4 text-gray-700">Meet the Team</h2>
+      <h2 className="cormorant text-5xl font-bold mb-4 text-gray-700">
+        Meet the Team
+      </h2>
       <p className="text-gray-500 mb-12">
         Together, they're building a future where no one is left behind in the
         search for healing.
@@ -12,7 +14,7 @@ export default function MeetTheTeamSection() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
         {/* Alessandro */}
-        <div className="bg-purple-50 p-6 rounded-lg">
+        <div className="bg-white p-6 rounded-lg">
           <div className="flex flex-col items-center mb-4">
             <img
               src={alessandroPic}
@@ -36,7 +38,7 @@ export default function MeetTheTeamSection() {
         </div>
 
         {/* Ishita */}
-        <div className="bg-purple-50 p-6 rounded-lg">
+        <div className="bg-white p-6 rounded-lg">
           <div className="flex flex-col items-center mb-4">
             <img
               src={ishitaPic}
