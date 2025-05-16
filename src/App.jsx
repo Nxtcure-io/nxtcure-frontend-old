@@ -3,14 +3,13 @@ import Navbar from "./components/Navbar";
 
 function App() {
   return (
-    <div className="min-h-screen bg-white flex justify-center items-start pt-4">
+    <div className="min-h-screen bg-white flex justify-center items-start pt-4 pl-4 pr-4">
       {/* This outer div centers and pads from all sides */}
 
       <div
-        className="w-full max-w-[1440px] bg-white rounded-md shadow-md overflow-auto"
+        className="w-full max-w-[1440px] bg-white rounded-md shadow-md overflow-auto border-1 border-gray-400"
         style={{
           height: "95vh",
-          border: "1.8px solid gray-500",
           boxShadow: "1px 4px 8px #908DDC",
         }}
       >

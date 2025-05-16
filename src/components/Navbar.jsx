@@ -29,11 +29,11 @@ const Navbar = () => {
             href="#about"
             className="nav-txt text-gray-700 hover:text-blue-600 font-medium transition"
           >
-            About Us
+            About
           </a>
           {/* Dropdown for NxTrials */}
           <div className="relative group">
-            <button className="nav-txt text-gray-700 hover:text-blue-600 font-medium transition">
+            <button className="nav-txt text-gray-700 hover:text-blue-600 font-medium transition cursor-pointer">
               NxtTrials
             </button>
             <div className="absolute left-0 mt-2 w-40 bg-white shadow-lg rounded-md opacity-0 group-hover:opacity-100 group-hover:translate-y-1 transform transition duration-200 z-40 pointer-events-none group-hover:pointer-events-auto">
@@ -72,7 +72,7 @@ const Navbar = () => {
         </nav>
 
         {/* CTA Button */}
-        <div className="hidden md:flex">
+        {/* <div className="hidden md:flex">
           <a
             href="#login"
             className="hover:text-blue-600 text-gray-700 font-semibold py-2 px-6 rounded-full transition duration-300"
@@ -85,7 +85,7 @@ const Navbar = () => {
           >
             Sign Up
           </a>
-        </div>
+        </div> */}
       </div>
     </header>
   );
