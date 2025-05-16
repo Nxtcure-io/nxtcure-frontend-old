@@ -45,7 +45,7 @@ export default function ContactForm() {
           ></textarea>
           <button
             type="submit"
-            className="bg-[#7D4AE7] text-white px-6 py-2 rounded-full hover:bg-[#6a3dcc] transition"
+            className="button_hvr bg-[#7D4AE7] text-white px-6 py-2 rounded-full hover:bg-[#6a3dcc] transition cursor-pointer"
           >
             Submit
           </button>

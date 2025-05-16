@@ -42,3 +42,9 @@ color: #908DDC;
   text-decoration: underline overline dotted;
   text-underline-offset: 6px;
 }
+
+.store-hvr:hover{
+  border: 0.8px solid white;
+  color: white;
+  background-color: black;
+}
