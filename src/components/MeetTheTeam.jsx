@@ -131,8 +131,8 @@ export default function MeetTheTeamSection() {
                   <div>
                     <div className="flex items-center mb-4">
                       <img
-                        src={shruthiPic}
-                        alt="Shruthi"
+                        src={sruthiPic}
+                        alt="Sruthi"
                         className="w-20 h-20 rounded-full mr-4"
                       />
                       <div className="text-left">
