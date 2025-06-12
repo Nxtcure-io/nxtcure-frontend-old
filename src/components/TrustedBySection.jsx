@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 
 import harvardLogo from "../assets/harvard.png";
 import yaleLogo from "../assets/Yale_University_logo.png";
+import mitLogo from "../assets/mit.png";
 import hipaaBadge from "../assets/hipaa-compliant.png";
 import schwarzman from "../assets/sc.png";
 import broad from "../assets/broad.png";
@@ -12,6 +13,7 @@ export default function TrustedBySection() {
   const logos = [
     { src: harvardLogo, alt: "Harvard Logo", size: "w-16 h-16" },
     { src: yaleLogo, alt: "Yale Logo", size: "h-10" },
+    { src: mitLogo, alt: "MIT Logo", size: "h-10" },
     { src: schwarzman, alt: "Schwarzman Scholars Logo", size: "h-10" },
     { src: broad, alt: "Broad Institute Logo", size: "h-10" },
     { src: forbes, alt: "Forbes Logo", size: "h-7" },
