@@ -114,7 +114,7 @@ export default function MeetTheTeamSection() {
         </div>
 
 
-        {/* Shruthi */}
+        {/* Sruthi */}
         <div ref={ref2} className="h-full">
           <AnimatePresence mode="wait">
             {inView2 && (
@@ -136,7 +136,7 @@ export default function MeetTheTeamSection() {
                         className="w-20 h-20 rounded-full mr-4"
                       />
                       <div className="text-left">
-                        <h4 className="font-bold">Shruthi</h4>
+                        <h4 className="font-bold">Sruthi</h4>
                         <p className="text-sm text-gray-400">COO</p>
                       </div>
                     </div>
