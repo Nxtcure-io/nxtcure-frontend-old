@@ -22,9 +22,6 @@ export default function ContactForm() {
             <p>
               <strong>Chat with us:</strong> support@nxtcure.com
             </p>
-            <p>
-              <strong>Call us:</strong> +91 9876543210
-            </p>
           </div>
         </motion.div>
 
