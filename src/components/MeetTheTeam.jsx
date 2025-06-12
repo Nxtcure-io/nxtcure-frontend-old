@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import alessandroPic from "../assets/alessandro.jpg";
+import shruthiPic from "../assets/shruthi.jpg";
+import keanuPic from "../assets/keanu.jpg";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -110,12 +112,12 @@ export default function MeetTheTeamSection() {
         </div>
 
 
-        {/* Alessandro */}
+        {/* Shruthi */}
         <div ref={ref1} className="h-full">
           <AnimatePresence mode="wait">
             {inView1 && (
               <motion.div
-                key="alessandro"
+                key="shruthi"
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
@@ -127,33 +129,25 @@ export default function MeetTheTeamSection() {
                   <div>
                     <div className="flex items-center mb-4">
                       <img
-                        src={alessandroPic}
-                        alt="Alessandro"
+                        src={shruthiPic}
+                        alt="Shruthi"
                         className="w-20 h-20 rounded-full mr-4"
                       />
                       <div className="text-left">
-                        <h4 className="font-bold">Alessandro Hammond</h4>
-                        <p className="text-sm text-gray-400">CEO</p>
+                        <h4 className="font-bold">Shruthi</h4>
+                        <p className="text-sm text-gray-400">COO</p>
                       </div>
                     </div>
                     <p className="text-justify text-gray-600 text-sm">
-                      Alessandro Hammond is a Harvard graduate and Schwarzman
-                      Scholar currently conducting clinical research at Boston
-                      Children’s Hospital, the Broad Institute, and
-                      Massachusetts General Hospital. Specializing in oncology
-                      and hematology, he has authored 20+ publications in
-                      leading journals including Nature, Nature Medicine, and
-                      JCO. Featured in Forbes and Good Morning America, he is
-                      passionate about connecting patients with clinical trials
-                      and guiding researchers through them.
+		    	Sruthi Ranganathan is a medical student at the Univeristy of Cambridge, having grown up in Singapore. She has clinical interests in neurosurgery and oncology, and is deeply passionate about evidence-based medicine, healthcare equity, and policies. At NxtCure, she is excited to aid in developing the next big solution for barriers in clinical trials enrolllment and commitment for patients, doctors, and researchers
                     </p>
                   </div>
                   <div className="mt-4 text-left">
                     <a
-                      href="https://www.linkedin.com/in/alessandro-hammond-43b650224/"
+                      href="https://www.linkedin.com/in/sruthi-ranganathan-9243441b7/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label="Alessandro LinkedIn"
+                      aria-label="Sruthi LinkedIn"
                       className="inline-block"
                     >
                       <svg
@@ -185,12 +179,12 @@ export default function MeetTheTeamSection() {
           </AnimatePresence>
         </div>
 
-        {/* Alessandro */}
+        {/* Keanu */}
         <div ref={ref1} className="h-full">
           <AnimatePresence mode="wait">
             {inView1 && (
               <motion.div
-                key="alessandro"
+                key="keanu"
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
@@ -202,33 +196,25 @@ export default function MeetTheTeamSection() {
                   <div>
                     <div className="flex items-center mb-4">
                       <img
-                        src={alessandroPic}
-                        alt="Alessandro"
+                        src={keanuPic}
+                        alt="Keanu"
                         className="w-20 h-20 rounded-full mr-4"
                       />
                       <div className="text-left">
-                        <h4 className="font-bold">Alessandro Hammond</h4>
-                        <p className="text-sm text-gray-400">CEO</p>
+                        <h4 className="font-bold">Keanu Clark</h4>
+                        <p className="text-sm text-gray-400">CTO</p>
                       </div>
                     </div>
                     <p className="text-justify text-gray-600 text-sm">
-                      Alessandro Hammond is a Harvard graduate and Schwarzman
-                      Scholar currently conducting clinical research at Boston
-                      Children’s Hospital, the Broad Institute, and
-                      Massachusetts General Hospital. Specializing in oncology
-                      and hematology, he has authored 20+ publications in
-                      leading journals including Nature, Nature Medicine, and
-                      JCO. Featured in Forbes and Good Morning America, he is
-                      passionate about connecting patients with clinical trials
-                      and guiding researchers through them.
+		    	Keanu Clark is a Massachusetts Institute of Technology Graduate who studied Computer Science and Molecular Biology.  During his time in the Sharp Lab at the MIT Koch Institute for Integrative Cancer Research, he learned machine learning in dialouge with cutting edge computational biology literature. A winner of HackMIT and the IBM Call for Code Challenge, he has a curious mind for making technology solve tough problems in unconvential ways from algorithms serving medical discovery to novel networking protocols.
                     </p>
                   </div>
                   <div className="mt-4 text-left">
                     <a
-                      href="https://www.linkedin.com/in/alessandro-hammond-43b650224/"
+                      href="https://www.linkedin.com/in/keanu-clark-3625b4286/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label="Alessandro LinkedIn"
+                      aria-label="Keanu LinkedIn"
                       className="inline-block"
                     >
                       <svg
