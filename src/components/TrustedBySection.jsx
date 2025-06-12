@@ -8,6 +8,7 @@ import hipaaBadge from "../assets/hipaa-compliant.png";
 import schwarzman from "../assets/sc.png";
 import broad from "../assets/broad.png";
 import forbes from "../assets/forbes.png";
+import cambridge from "../assets/cambridge.png";
 
 export default function TrustedBySection() {
   const logos = [
@@ -15,6 +16,7 @@ export default function TrustedBySection() {
     { src: yaleLogo, alt: "Yale Logo", size: "h-10" },
     { src: mitLogo, alt: "MIT Logo", size: "h-10" },
     { src: schwarzman, alt: "Schwarzman Scholars Logo", size: "h-10" },
+    { src: cambridge, alt: "University of Cambridge Logo", size: "h-10" },
     { src: broad, alt: "Broad Institute Logo", size: "h-10" },
     { src: forbes, alt: "Forbes Logo", size: "h-7" },
   ];
