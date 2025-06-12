@@ -21,9 +21,11 @@ const cardVariants = {
 export default function MeetTheTeamSection() {
   const ref1 = useRef(null);
   const ref2 = useRef(null);
+  const ref3 = useRef(null);
 
   const inView1 = useInView(ref1, { amount: 0.4 });
   const inView2 = useInView(ref2, { amount: 0.4 });
+  const inView3 = useInView(ref3, { amount: 0.4 });
 
   return (
     <section className="py-20 bg-white text-center px-4">
@@ -113,9 +115,9 @@ export default function MeetTheTeamSection() {
 
 
         {/* Shruthi */}
-        <div ref={ref1} className="h-full">
+        <div ref={ref2} className="h-full">
           <AnimatePresence mode="wait">
-            {inView1 && (
+            {inView2 && (
               <motion.div
                 key="shruthi"
                 variants={cardVariants}
@@ -180,9 +182,9 @@ export default function MeetTheTeamSection() {
         </div>
 
         {/* Keanu */}
-        <div ref={ref1} className="h-full">
+        <div ref={ref3} className="h-full">
           <AnimatePresence mode="wait">
-            {inView1 && (
+            {inView3 && (
               <motion.div
                 key="keanu"
                 variants={cardVariants}
