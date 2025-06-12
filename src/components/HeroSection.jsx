@@ -5,7 +5,6 @@ import schwarzman from "../assets/sc.png";
 import broad from "../assets/broad.png";
 import forbes from "../assets/forbes.png";
 import mit from "../assets/mit.png";
-import ucambridge from "../assets/ucambridge.jpg";
 
 export default function HeroSection() {
   return (
@@ -93,7 +92,6 @@ export default function HeroSection() {
             alt="Schwarzman Scholars"
             className="h-9 object-contain"
           />
-          <img src={ucambridge} alt="University of Cambridge" className="h-8 object-contain" />
           <img
             src={broad}
             alt="Broad Institute"

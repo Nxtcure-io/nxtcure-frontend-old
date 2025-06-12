@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import alessandroPic from "../assets/alessandro.jpg";
-import shruthiPic from "../assets/shruthi.jpg";
+import sruthiPic from "../assets/sruthi.jpg";
 import keanuPic from "../assets/keanu.jpg";
 
 const cardVariants = {
@@ -119,7 +119,7 @@ export default function MeetTheTeamSection() {
           <AnimatePresence mode="wait">
             {inView2 && (
               <motion.div
-                key="shruthi"
+                key="sruthi"
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
