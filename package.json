@@ -1,6 +1,9 @@
 {
   "name": "nxtcure-frontend",
+<<<<<<< HEAD
   "homepage": "https://nxtcure-io.github.io/nxtcure-frontend/",
+=======
+>>>>>>> c9f9254 ( frontend)
   "private": true,
   "version": "0.0.0",
   "type": "module",

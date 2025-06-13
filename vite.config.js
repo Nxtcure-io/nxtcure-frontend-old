@@ -5,6 +5,6 @@ import tailwindcss from "@tailwindcss/vite";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  // eslint-disable-next-line no-undef
-  base: process.env.VITE_BASE_PATH || "/nxtcure-frontend",
+  // Set base to "/" for Vercel deployment
+  base: "/",
 });
