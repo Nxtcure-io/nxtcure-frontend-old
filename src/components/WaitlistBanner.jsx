@@ -23,9 +23,9 @@ export default function WaitlistBanner() {
 	  	Join Our Waitlist
           </span>
         </motion.h1>
-	</a>
 
       </motion.div>
+      </a>
     </section>
   );
 }
