@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 export default function WaitlistBanner() {
   return (
-    <section className="flex flex-col items-center justify-center min-h-screen px-6 py-6 text-center bg-[radial-gradient(circle_at_center,_#020202_10%,_#020202_30%,_#0f0f0f_80%)]">
+    <section className="flex flex-col items-center justify-center px-6 py-6 text-center bg-[radial-gradient(circle_at_center,_#020202_10%,_#020202_30%,_#0f0f0f_80%)]">
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSfb_5tHzHN3NrhJFKpRhEhLkQIDQrXdH7jXGKK-PZrt4KBaAg/viewform?usp=sharing&ouid=105836010722188729845">
       <motion.div
         className="max-w-3xl"
