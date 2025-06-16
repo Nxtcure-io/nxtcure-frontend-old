@@ -32,6 +32,13 @@ const Navbar = () => {
             About
           </a>
 
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfb_5tHzHN3NrhJFKpRhEhLkQIDQrXdH7jXGKK-PZrt4KBaAg/viewform?usp=sharing&ouid=105836010722188729845"
+            className="nav-txt text-gray-700 hover:text-blue-600 font-medium transition"
+          >
+            Join Our Waitlist
+          </a>
+
           {/* Dropdown */}
           <div className="relative group">
             <button className="nav-txt text-gray-700 hover:text-blue-600 font-medium transition cursor-pointer">
