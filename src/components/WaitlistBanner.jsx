@@ -13,7 +13,7 @@ export default function WaitlistBanner() {
       >
         <motion.h1
           className="font-bold leading-tight mt-2"
-          style={{ fontSize: "4rem" }}
+          style={{ fontSize: "2rem" }}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.3 }}
