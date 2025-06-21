@@ -1,10 +1,32 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import NxtCureLogo from "../assets/logo-1.png";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+  const dropdownRef = useRef(null);
+
+   useEffect(() => {
+	const handleClickOutside = (event) => {
+		if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+			setDropdownOpen(false);
+		}
+	};
+
+	document.addEventListener('mousedown', handleClickOutside);
+	return () => {
+		  	document.removeEventListener('mousedown', handleClickOutside);
+		    	};
+	  }, []);
+
+  const handlePatientsClick = () => {
+	  	navigate('/patients');
+	  	setDropdownOpen(false);
+	  	setMenuOpen(false);
+};
 
   return (
     <header className="w-full shadow-sm sticky top-0 left-0 z-50 bg-white">
@@ -94,33 +116,38 @@ const Navbar = () => {
             About
           </a>
 
-          {/* Mobile Dropdown */}
-          <div>
-            <button
-              onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="flex items-center justify-between w-full text-gray-700 font-medium"
-            >
-              <span>NxtTrials</span>
-              <ChevronDown
-                className={`ml-2 transform transition-transform duration-300 ${
-                  dropdownOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-            {dropdownOpen && (
-              <div className="mt-2 pl-4 space-y-2">
-                <a href="#patients" className="block text-gray-700">
-                  Patients
-                </a>
-                <a href="#researchers" className="block text-gray-700">
-                  Researchers
-                </a>
-                <a href="#doctors" className="block text-gray-700">
-                  Doctors
-                </a>
-              </div>
-            )}
-          </div>
+
+  		{/* Dropdown */}
+		<div className="relative group" ref={dropdownRef}>
+		  <button 
+		onClick={() => setDropdownOpen(!dropdownOpen)}
+		className="nav-txt text-gray-700 hover:text-blue-600 font-medium transition cursor-pointer flrx items-center">
+		    NxtTrials
+	    <ChevronDown
+		className={`m1-1 transform transition-transform duration-200 ${
+						dropdownOpen ? "rotate-180" : ""
+					}`}
+		size={16}
+		/>
+		  </button>
+	  {dropdownOpen && (
+				<div className="absolute left-0 mt-2 w-40 bg-white shadow-lg rounded-md z-40 border border-gray-200">
+				  <button
+				    onClick={handlePatientsClick}
+				    className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
+				  >
+				    Patients
+				  </button>
+				  <button
+				    onClick={() => scrollToSection('doctors')}
+				    className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition"
+				  >
+				  Physicians
+				  </button>
+				</div>
+			      )}
+		</div>
+
 
           <a href="#pricing" className="block text-gray-700 font-medium">
             Pricing
