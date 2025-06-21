@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Loader from "./components/Loader";
+import Patient from "./pages/Patients";
+import Results from "./pages/Results";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -35,10 +38,18 @@ function App() {
             exit={{ opacity: 0, y: -30 }}
             transition={{ duration: 0.7 }}
           >
-            <Navbar />
-            <main>
-              <Home />
-            </main>
+		<Router>
+		    <Navbar />
+		    <main>
+		   <Routes>
+			<Route path="/" element={<Home />} />
+			<Route path="/nxtcure-frontend-old" element={<Home />} />
+			<Route path="/patients" element={<Patient />} />
+			<Route path="/results" element={<Results />} />
+		   </Routes>
+		    </main>
+		 </Router>
+
           </motion.div>
         )}
       </AnimatePresence>
