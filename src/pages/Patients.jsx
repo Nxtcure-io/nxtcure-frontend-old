@@ -73,9 +73,7 @@ export default function Patient() {
     setLoading(true);
     try {
       // Use environment-aware API URL
-      //const apiUrl = import.meta.env.VITE_API_URL || "http://34.42.202.162:8000";
-      const apiUrl = "https://uemyr3-ip-34-170-238-30.tunnelmole.net" 
-      //const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+      const apiUrl = import.meta.env.VITE_API_URL || "http://35.239.199.195:8000";
       const response = await fetch(`${apiUrl}/match`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
