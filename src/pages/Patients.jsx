@@ -73,7 +73,7 @@ export default function Patient() {
     setLoading(true);
     try {
       // Use environment-aware API URL
-      const apiUrl = "https://lw4hda-ip-35-239-199-195.tunnelmole.net";
+      const apiUrl = "https://sfooxn-ip-34-41-4-189.tunnelmole.net";
       const response = await fetch(`${apiUrl}/match`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
