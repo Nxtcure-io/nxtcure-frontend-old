@@ -1,36 +1,67 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { UploadCloud } from "lucide-react";
+import { UploadCloud, Brain, Loader2 } from "lucide-react";
 
 export default function Patient() {
   const navigate = useNavigate();
-  const [method, setMethod] = useState("upload");
-  const [fileName, setFileName] = useState("No file chosen");
+  const [method, setMethod] = useState("history");
   const [historyText, setHistoryText] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showLoadingPage, setShowLoadingPage] = useState(false);
   
-  // Manual input states
   const [manualData, setManualData] = useState({
+    age: "",
+    gender: "",
     condition: "",
     medications: "",
-    allergies: ""
+    familyConditions: "",
+    diagnosisDate: "",
+    diseaseStatus: "",
+    priorTreatments: [],
+    testProcedure: "",
+    testResult: "",
+    city: "",
+    state: "",
+    travelDistance: "",
+    drugAllergies: "",
+    ethnicity: "",
+    height: "",
+    weight: "",
+    comorbidities: [],
+    otherComorbidities: ""
   });
 
-  // Checkbox states
+  const [otherPriorTreatment, setOtherPriorTreatment] = useState("");
+  const [otherComorbidity, setOtherComorbidity] = useState("");
+
   const [checkboxes, setCheckboxes] = useState({
     terms: false,
     deidentify: false
   });
 
-  const handleFileChange = (e) => {
-    setFileName(e.target.files[0]?.name || "No file chosen");
-  };
-
   const handleManualDataChange = (field, value) => {
     setManualData(prev => ({
       ...prev,
       [field]: value
+    }));
+  };
+
+  const handlePriorTreatmentChange = (treatment) => {
+    setManualData(prev => ({
+      ...prev,
+      priorTreatments: prev.priorTreatments.includes(treatment)
+        ? prev.priorTreatments.filter(t => t !== treatment)
+        : [...prev.priorTreatments, treatment]
+    }));
+  };
+
+  const handleComorbidityChange = (comorbidity) => {
+    setManualData(prev => ({
+      ...prev,
+      comorbidities: prev.comorbidities.includes(comorbidity)
+        ? prev.comorbidities.filter(c => c !== comorbidity)
+        : [...prev.comorbidities, comorbidity]
     }));
   };
 
@@ -42,7 +73,6 @@ export default function Patient() {
   };
 
   const validateForm = () => {
-    // Check if both checkboxes are checked (only for history and manual methods)
     if ((method === "history" || method === "manual") && (!checkboxes.terms || !checkboxes.deidentify)) {
       alert("Please accept the Terms and Conditions and enable De-Identify Data to continue.");
       return false;
@@ -51,7 +81,10 @@ export default function Patient() {
   };
 
   const handleFindTrials = async (inputText = null) => {
+    console.log('handleFindTrials called with method:', method);
+    
     if (!validateForm()) {
+      console.log('Form validation failed');
       return;
     }
 
@@ -60,52 +93,82 @@ export default function Patient() {
     if (!textToSend) {
       if (method === "history") {
         textToSend = historyText;
+        console.log('Using history text:', textToSend);
       } else if (method === "manual") {
-        textToSend = `Medical Condition: ${manualData.condition}. Medications: ${manualData.medications}. Allergies: ${manualData.allergies}`;
+        const priorTreatmentsText = manualData.priorTreatments.length > 0 
+          ? manualData.priorTreatments.join(", ") + (otherPriorTreatment ? `, ${otherPriorTreatment}` : "")
+          : "none";
+        
+        const comorbiditiesText = manualData.comorbidities.length > 0
+          ? manualData.comorbidities.join(", ") + (otherComorbidity ? `, ${otherComorbidity}` : "")
+          : "none";
+
+        textToSend = `I am ${manualData.age} years old and I am ${manualData.gender}. I am looking for a clinical trial for ${manualData.condition}. I currently take ${manualData.medications || "no medications"}. I have a family history of ${manualData.familyConditions || "no family history"}. I was diagnosed in ${manualData.diagnosisDate} and am currently in ${manualData.diseaseStatus} status. I previously received ${priorTreatmentsText}. I had ${manualData.testProcedure || "no specific tests"} which showed ${manualData.testResult || "no specific results"}. I live in ${manualData.city}, ${manualData.state} and am willing to travel up to ${manualData.travelDistance}. I have ${manualData.drugAllergies || "no known drug allergies"}. My ethnicity is ${manualData.ethnicity}. My height is ${manualData.height} and my weight is ${manualData.weight} lbs. I have ${comorbiditiesText} as comorbidities.`;
+        console.log('Generated text from form:', textToSend);
       }
     }
 
     if (!textToSend || !textToSend.trim()) {
+      console.log('No text to send');
       alert("Please enter a valid description.");
       return;
     }
 
+    console.log('Starting matching process...');
     setLoading(true);
+    setShowLoadingPage(true);
+    
     try {
-      // Use environment-aware API URL
-      const apiUrl = "https://rfu2p0-ip-34-41-4-189.tunnelmole.net";
-      const response = await fetch(`${apiUrl}/match`, {
+      console.log('Calling backend for BERT matching...');
+      const apiUrl = import.meta.env.VITE_API_URL || "/api";
+      const response = await fetch(`${apiUrl}/bert-match`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ description: textToSend }),
+        body: JSON.stringify({ patientDescription: textToSend }),
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error('API response error:', errorText);
+        throw new Error(`Failed to get matches: ${response.status} ${errorText}`);
       }
 
-      const data = await response.json();
+      const matches = await response.json();
       
-      if (data.error) {
-        alert(data.error);
-        return;
-      }
+      console.log('Final matches from API:', matches.length);
       
-      // Navigate to results page with the data
       navigate('/results', { 
         state: { 
-          results: data.matches || [],
+          results: matches || [],
           patientData: textToSend
         } 
       });
 
     } catch (err) {
-      console.error("API Error:", err);
-      alert("Error fetching matches. Make sure the backend is running on port 8000.");
+      console.error("Matching Error:", err);
+      alert("Error finding matches. Please try again.");
     } finally {
       setLoading(false);
+      setShowLoadingPage(false);
     }
   };
+
+  // Loading Page Component
+  if (showLoadingPage) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-600 mx-auto mb-6"></div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Finding Clinical Trials</h2>
+          <p className="text-gray-600 mb-6">Analyzing your information and matching with available trials...</p>
+          <div className="flex items-center justify-center space-x-2 text-purple-600">
+            <Brain size={20} />
+            <span className="text-sm">AI-powered matching in progress</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const renderUploadMethod = () => {
     switch (method) {
@@ -118,72 +181,274 @@ export default function Patient() {
               onChange={(e) => setHistoryText(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg min-h-[150px] focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             />
-            <button
-              onClick={() => handleFindTrials()}
-              className="bg-gradient-to-r from-[#5F5AE8] to-[#BB5AE7] text-white px-6 py-3 rounded-lg w-full transition hover:opacity-90"
-              disabled={loading}
-            >
-              {loading ? "Finding Trials..." : "Find Matching Trials"}
-            </button>
           </div>
         );
       case "manual":
         return (
-          <div className="mt-6 space-y-4">
-            <input
-              type="text"
-              placeholder="Medical Condition (e.g., Heart Disease, Diabetes)"
-              value={manualData.condition}
-              onChange={(e) => handleManualDataChange("condition", e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            />
-            <input
-              type="text"
-              placeholder="Current Medications (e.g., Metformin, Lisinopril)"
-              value={manualData.medications}
-              onChange={(e) => handleManualDataChange("medications", e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            />
-            <input
-              type="text"
-              placeholder="Known Allergies (e.g., Penicillin, None)"
-              value={manualData.allergies}
-              onChange={(e) => handleManualDataChange("allergies", e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            />
-            <button
-              onClick={() => handleFindTrials()}
-              className="bg-gradient-to-r from-[#5F5AE8] to-[#BB5AE7] text-white px-6 py-3 rounded-lg w-full transition hover:opacity-90"
-              disabled={loading}
-            >
-              {loading ? "Finding Trials..." : "Find Matching Trials"}
-            </button>
-          </div>
-        );
-      case "upload":
-        return (
-          <div className="border-2 border-dashed border-gray-400 rounded-xl p-6 mt-6 text-center bg-white shadow-sm">
-            <label className="cursor-pointer block">
-              <div className="flex flex-col items-center">
-                <UploadCloud size={48} className="text-purple-400" />
-                <span className="font-semibold text-gray-600 mt-2">Drag & Drop or Browse</span>
-                <span className="text-sm text-gray-500 mt-1">Upload medical records (PDF, DOC, TXT)</span>
+          <div className="mt-6 space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Age</label>
+                <input
+                  type="number"
+                  placeholder="Enter age"
+                  value={manualData.age}
+                  onChange={(e) => handleManualDataChange("age", e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                />
               </div>
-              <input 
-                type="file" 
-                className="hidden" 
-                onChange={handleFileChange}
-                accept=".pdf,.doc,.docx,.txt"
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
+                <select
+                  value={manualData.gender}
+                  onChange={(e) => handleManualDataChange("gender", e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                >
+                  <option value="">Select gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Non-binary">Non-binary</option>
+                  <option value="Prefer not to say">Prefer not to say</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Condition</label>
+              <input
+                type="text"
+                placeholder="e.g., Heart Disease, Diabetes, Cancer"
+                value={manualData.condition}
+                onChange={(e) => handleManualDataChange("condition", e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
-              <div className="mt-4 bg-white border border-gray-300 rounded-md px-4 py-2 w-full max-w-lg mx-auto text-sm text-gray-600">
-                <strong>Choose File</strong> &nbsp; {fileName}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Current Medications</label>
+              <input
+                type="text"
+                placeholder="e.g., Metformin, Lisinopril, Aspirin"
+                value={manualData.medications}
+                onChange={(e) => handleManualDataChange("medications", e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Family History</label>
+              <input
+                type="text"
+                placeholder="e.g., Heart disease, Diabetes, Cancer"
+                value={manualData.familyConditions}
+                onChange={(e) => handleManualDataChange("familyConditions", e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Diagnosis Date</label>
+                <input
+                  type="month"
+                  value={manualData.diagnosisDate}
+                  onChange={(e) => handleManualDataChange("diagnosisDate", e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                />
               </div>
-            </label>
-            <div className="mt-4">
-              <button className="bg-gradient-to-r from-[#5F5AE8] to-[#BB5AE7] text-white px-6 py-3 rounded-lg hover:opacity-90 transition">
-                Process File
-              </button>
-              <p className="text-xs text-gray-500 mt-2">File upload processing not yet implemented</p>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Disease Status</label>
+                <select
+                  value={manualData.diseaseStatus}
+                  onChange={(e) => handleManualDataChange("diseaseStatus", e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                >
+                  <option value="">Select status</option>
+                  <option value="remission">Remission</option>
+                  <option value="relapsed">Relapsed</option>
+                  <option value="refractory">Refractory</option>
+                  <option value="stable">Stable</option>
+                  <option value="progressing">Progressing</option>
+                  <option value="newly diagnosed">Newly Diagnosed</option>
+                  <option value="unknown">Unknown</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Prior Treatments</label>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                {['surgery', 'chemotherapy', 'radiation therapy', 'immunotherapy', 'targeted therapy', 'stem cell transplant'].map(treatment => (
+                  <label key={treatment} className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      checked={manualData.priorTreatments.includes(treatment)}
+                      onChange={() => handlePriorTreatmentChange(treatment)}
+                      className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                    />
+                    <span className="text-sm text-gray-700 capitalize">{treatment}</span>
+                  </label>
+                ))}
+              </div>
+              <input
+                type="text"
+                placeholder="Other treatments"
+                value={otherPriorTreatment}
+                onChange={(e) => setOtherPriorTreatment(e.target.value)}
+                className="w-full mt-2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Test/Procedure</label>
+                <input
+                  type="text"
+                  placeholder="e.g., MRI, Biopsy, Blood test"
+                  value={manualData.testProcedure}
+                  onChange={(e) => handleManualDataChange("testProcedure", e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Test Result</label>
+                <input
+                  type="text"
+                  placeholder="e.g., MRD-positive, FLT3 mutation"
+                  value={manualData.testResult}
+                  onChange={(e) => handleManualDataChange("testResult", e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
+                <input
+                  type="text"
+                  placeholder="Enter city"
+                  value={manualData.city}
+                  onChange={(e) => handleManualDataChange("city", e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">State</label>
+                <input
+                  type="text"
+                  placeholder="Enter state"
+                  value={manualData.state}
+                  onChange={(e) => handleManualDataChange("state", e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Travel Distance</label>
+                <select
+                  value={manualData.travelDistance}
+                  onChange={(e) => handleManualDataChange("travelDistance", e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                >
+                  <option value="">Select distance</option>
+                  <option value="25 mi">25 mi</option>
+                  <option value="50 mi">50 mi</option>
+                  <option value="100 mi">100 mi</option>
+                  <option value="250 mi">250 mi</option>
+                  <option value="nationwide">Nationwide</option>
+                  <option value="specify region">Specify region</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Drug Allergies</label>
+                <select
+                  value={manualData.drugAllergies}
+                  onChange={(e) => handleManualDataChange("drugAllergies", e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                >
+                  <option value="">Select option</option>
+                  <option value="no known drug allergies">No known drug allergies</option>
+                  <option value="specify allergies">Specify allergies</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Race/Ethnicity</label>
+                <select
+                  value={manualData.ethnicity}
+                  onChange={(e) => handleManualDataChange("ethnicity", e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                >
+                  <option value="">Select ethnicity</option>
+                  <option value="White">White</option>
+                  <option value="Black or African American">Black or African American</option>
+                  <option value="Asian">Asian</option>
+                  <option value="Hispanic or Latino">Hispanic or Latino</option>
+                  <option value="Native American">Native American</option>
+                  <option value="Pacific Islander">Pacific Islander</option>
+                  <option value="Other">Other</option>
+                  <option value="Prefer not to say">Prefer not to say</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Height</label>
+                <input
+                  type="text"
+                  placeholder="e.g., 5'8&quot;"
+                  value={manualData.height}
+                  onChange={(e) => handleManualDataChange("height", e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Weight (lbs)</label>
+                <input
+                  type="number"
+                  placeholder="Enter weight in pounds"
+                  value={manualData.weight}
+                  onChange={(e) => handleManualDataChange("weight", e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Comorbidities</label>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                {['diabetes', 'hypertension', 'chronic kidney disease', 'asthma', 'obesity', 'COPD'].map(comorbidity => (
+                  <label key={comorbidity} className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      checked={manualData.comorbidities.includes(comorbidity)}
+                      onChange={() => handleComorbidityChange(comorbidity)}
+                      className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                    />
+                    <span className="text-sm text-gray-700 capitalize">{comorbidity}</span>
+                  </label>
+                ))}
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    checked={manualData.comorbidities.includes('no major comorbidities')}
+                    onChange={() => handleComorbidityChange('no major comorbidities')}
+                    className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                  />
+                  <span className="text-sm text-gray-700">No major comorbidities</span>
+                </label>
+              </div>
+              <input
+                type="text"
+                placeholder="Other comorbidities"
+                value={otherComorbidity}
+                onChange={(e) => setOtherComorbidity(e.target.value)}
+                className="w-full mt-2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              />
             </div>
           </div>
         );
@@ -203,104 +468,124 @@ export default function Patient() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f7f7f8] px-4 py-10 flex flex-col items-center">
-      {/* Progress Bar */}
-      <div className="w-full max-w-5xl mb-10">
-        <div className="flex items-center">
-          <div className="w-7 h-7 rounded-full bg-[#5F5AE8]"></div>
-          <div className="flex-1 h-2 bg-gradient-to-r from-[#5F5AE8] to-[#BB5AE7]"></div>
-          <div className="w-7 h-7 rounded-full bg-gray-300"></div>
-          <div className="flex-1 h-2 bg-gray-300"></div>
-          <div className="w-7 h-7 rounded-full bg-gray-300"></div>
-        </div>
-        <div className="flex justify-between text-sm text-gray-500 mt-2">
-          <span className="text-black font-semibold">Upload EHR</span>
-          <span>View Trials</span>
-          <span>Connect with Trials</span>
-        </div>
-      </div>
-
-      {/* Upload Box */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="w-full max-w-3xl bg-white rounded-2xl p-10 shadow-xl"
-      >
-        <h2 className="text-2xl font-bold mb-2">Upload Your Health Records</h2>
-        <p className="text-sm text-gray-500 mb-6">Secure and HIPAA-Compliant</p>
-
-        {/* Method Selection */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
-          {["history", "manual", "upload", "mychart"].map((m) => (
-            <button
-              key={m}
-              onClick={() => setMethod(m)}
-              className={`py-2 px-4 rounded-lg border transition-all ${
-                method === m
-                  ? "bg-gradient-to-r from-[#5F5AE8] to-[#BB5AE7] text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              {{
-                history: "Enter Patient History",
-                manual: "Manually Enter",
-                upload: "Upload EHR",
-                mychart: "Login via MyChart",
-              }[m]}
-            </button>
-          ))}
-        </div>
-
-        {renderUploadMethod()}
-
-        {/* Checkboxes - Only show for history and manual methods */}
-        {(method === "history" || method === "manual") && (
-          <>
-            <div className="flex items-start space-x-2 mt-6">
-              <input 
-                type="checkbox" 
-                id="terms" 
-                className="mt-1" 
-                checked={checkboxes.terms}
-                onChange={(e) => handleCheckboxChange("terms", e.target.checked)}
-              />
-              <label htmlFor="terms" className="text-sm text-gray-700">
-                I agree with <span className="font-semibold text-purple-600">Terms and Conditions</span>
-                <span className="text-red-500 ml-1">*</span>
-              </label>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 w-full">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white rounded-2xl shadow-lg border border-gray-200"
+        >
+          <div className="p-6 sm:p-8">
+            <div className="text-center mb-8">
+              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">Find Your Clinical Trial</h1>
+              <p className="mt-3 text-md text-gray-600 max-w-2xl mx-auto">
+                Provide your medical information using one of the methods below. Our AI will find the best trials for you.
+              </p>
             </div>
-            <div className="flex items-start space-x-2 mt-2 mb-6">
-              <input 
-                type="checkbox" 
-                id="deidentify" 
-                className="mt-1" 
-                checked={checkboxes.deidentify}
-                onChange={(e) => handleCheckboxChange("deidentify", e.target.checked)}
-              />
-              <label htmlFor="deidentify" className="text-sm text-gray-700">
-                De-Identify my Data
-                <span className="text-red-500 ml-1">*</span>
-              </label>
+
+            {/* Tab-like buttons */}
+            <div className="mb-6">
+              <div className="flex border-b border-gray-200">
+                <button
+                  onClick={() => setMethod("history")}
+                  className={`flex-1 py-3 text-center font-medium text-sm sm:text-base transition-colors duration-200 ${
+                    method === 'history' 
+                      ? 'border-b-2 border-purple-600 text-purple-600' 
+                      : 'text-gray-500 hover:text-gray-700'
+                  }`}
+                >
+                  Medical History
+                </button>
+                <button
+                  onClick={() => setMethod("manual")}
+                  className={`flex-1 py-3 text-center font-medium text-sm sm:text-base transition-colors duration-200 ${
+                    method === 'manual' 
+                      ? 'border-b-2 border-purple-600 text-purple-600' 
+                      : 'text-gray-500 hover:text-gray-700'
+                  }`}
+                >
+                  Detailed Form
+                </button>
+                <button
+                  onClick={() => setMethod("mychart")}
+                  className={`flex-1 py-3 text-center font-medium text-sm sm:text-base transition-colors duration-200 ${
+                    method === 'mychart' 
+                      ? 'border-b-2 border-purple-600 text-purple-600' 
+                      : 'text-gray-500 hover:text-gray-700'
+                  }`}
+                >
+                  MyChart
+                </button>
+              </div>
             </div>
             
-            {/* Validation Message */}
-            {(!checkboxes.terms || !checkboxes.deidentify) && (
-              <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                <p className="text-sm text-yellow-800">
-                  <span className="font-medium">Required:</span> Please check both boxes above to proceed with finding trials.
-                </p>
-              </div>
-            )}
-          </>
-        )}
-      </motion.div>
+            <form onSubmit={(e) => { e.preventDefault(); handleFindTrials(); }}>
+              {renderUploadMethod()}
 
-      {/* Footer */}
-      <div className="mt-12 text-sm text-gray-500 flex space-x-4">
-        <a href="#" className="hover:underline">Privacy</a>
-        <a href="#" className="hover:underline">Support</a>
-        <a href="#" className="hover:underline">FAQs</a>
+              {(method === "history" || method === "manual") && (
+                <>
+                  <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <div className="space-y-4">
+                      <div className="flex items-start space-x-3">
+                        <input
+                          type="checkbox"
+                          id="terms"
+                          checked={checkboxes.terms}
+                          onChange={(e) => handleCheckboxChange("terms", e.target.checked)}
+                          className="mt-1 h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                        />
+                        <div>
+                          <label htmlFor="terms" className="text-sm font-medium text-gray-800">
+                            I accept the Terms and Conditions
+                          </label>
+                          <p className="text-xs text-gray-500 mt-1">
+                            You agree to our terms of service and privacy policy.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start space-x-3">
+                        <input
+                          type="checkbox"
+                          id="deidentify"
+                          checked={checkboxes.deidentify}
+                          onChange={(e) => handleCheckboxChange("deidentify", e.target.checked)}
+                          className="mt-1 h-4 w-4 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                        />
+                        <div>
+                          <label htmlFor="deidentify" className="text-sm font-medium text-gray-800">
+                            De-Identify My Data
+                          </label>
+                          <p className="text-xs text-gray-500 mt-1">
+                            Enable this to protect your privacy before submitting.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-8">
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                    >
+                      {loading ? (
+                        <>
+                          <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                          Finding Trials...
+                        </>
+                      ) : (
+                        "Find Clinical Trials"
+                      )}
+                    </button>
+                  </div>
+                </>
+              )}
+            </form>
+          </div>
+        </motion.div>
       </div>
     </div>
   );
