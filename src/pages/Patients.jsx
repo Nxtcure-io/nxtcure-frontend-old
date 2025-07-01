@@ -120,7 +120,7 @@ export default function Patient() {
     
     try {
       console.log('Calling backend for BERT matching...');
-      const apiUrl = import.meta.env.VITE_API_URL || "/api";
+      const apiUrl = import.meta.env.VITE_API_URL || "nxtcure-frontend-old/api";
       const response = await fetch(`${apiUrl}/bert-match`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
