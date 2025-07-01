@@ -3,10 +3,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 import Home from "./pages/Home";
-import Navbar from "./components/Navbar";
-import Loader from "./components/Loader";
+import About from "./pages/About";
+import FAQ from "./pages/FAQ";
 import Patient from "./pages/Patients";
 import Results from "./pages/Results";
+import Navbar from "./components/Navbar";
+import Loader from "./components/Loader";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -38,18 +40,19 @@ function App() {
             exit={{ opacity: 0, y: -30 }}
             transition={{ duration: 0.7 }}
           >
-		<Router>
-		    <Navbar />
-		    <main>
-		   <Routes>
-			<Route path="/" element={<Home />} />
-			<Route path="/nxtcure-frontend-old" element={<Home />} />
-			<Route path="/patients" element={<Patient />} />
-			<Route path="/results" element={<Results />} />
-		   </Routes>
-		    </main>
-		 </Router>
-
+	  <Router>
+            <Navbar />
+            <main>
+	    <Routes>
+		<Route path="/" element={<Home />} />
+		<Route path="/nxtcure-frontend" element={<Home />} />
+		<Route path="/about" element={<About />} />
+		<Route path="/patients" element={<Patient />} />
+		<Route path="/results" element={<Results />} />
+		<Route path="/faq" element={<FAQ />} />
+	    </Routes>
+            </main>
+	  </Router>
           </motion.div>
         )}
       </AnimatePresence>
