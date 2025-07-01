@@ -45,10 +45,10 @@ function App() {
             <main>
 	    <Routes>
 		<Route path="/nxtcure-frontend-old" element={<Home />} />
-		<Route path="nxtcure-frontend-old/about" element={<About />} />
-		<Route path="nxtcure-frontend-old/patients" element={<Patient />} />
-		<Route path="nxtcure-frontend-old/results" element={<Results />} />
-		<Route path="nxtcure-frontend-old/faq" element={<FAQ />} />
+		<Route path="/nxtcure-frontend-old/about" element={<About />} />
+		<Route path="/nxtcure-frontend-old/patients" element={<Patient />} />
+		<Route path="/nxtcure-frontend-old/results" element={<Results />} />
+		<Route path="/nxtcure-frontend-old/faq" element={<FAQ />} />
 	    </Routes>
             </main>
 	  </Router>

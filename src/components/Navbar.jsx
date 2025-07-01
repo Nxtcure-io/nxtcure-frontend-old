@@ -25,19 +25,19 @@ const Navbar = () => {
   }, []);
 
   const handlePatientsClick = () => {
-	navigate('nxtcure-frontend-old/patients');
+	navigate('/nxtcure-frontend-old/patients');
 	setDropdownOpen(false);
 	setMenuOpen(false);
   };
 
   const handleAboutClick = () => {
-	navigate('nxtcure-frontend-old/about');
+	navigate('/nxtcure-frontend-old/about');
 	setDropdownOpen(false);
 	setMenuOpen(false);
   };
 
   const handleFAQClick = () => {
-	navigate('nxtcure-frontend-old/faq');
+	navigate('/nxtcure-frontend-old/faq');
 	setDropdownOpen(false);
 	setMenuOpen(false);
   };

@@ -137,7 +137,7 @@ export default function Patient() {
       
       console.log('Final matches from API:', matches.length);
       
-      navigate('nxtcure-frontend-old/results', { 
+      navigate('/nxtcure-frontend-old/results', { 
         state: { 
           results: matches || [],
           patientData: textToSend
