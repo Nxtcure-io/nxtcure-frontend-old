@@ -16,7 +16,7 @@ const Results = () => {
       setResults(location.state.results);
       setPatientData(location.state.patientData || "");
     } else {
-      navigate('/patients');
+      navigate('nxtcure-frontend-old/patients');
     }
   }, [location.state, navigate]);
 
@@ -139,7 +139,7 @@ const Results = () => {
           <div className="text-center py-12">
             <p className="text-gray-500 text-lg">No clinical trials found. Please try searching again.</p>
             <button 
-              onClick={() => navigate('/patients')}
+              onClick={() => navigate('nxtcure-frontend-old/patients')}
               className="mt-4 bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition"
             >
               Search Again
